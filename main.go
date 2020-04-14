@@ -20,9 +20,6 @@ var dataPVC = os.Getenv("DATA_PVC")
 // config pvc name
 var configPVC = os.Getenv("CONFIG_PVC")
 
-// transcode pvc name
-var transcodePVC = os.Getenv("TRANSCODE_PVC")
-
 // pms namespace
 var namespace = os.Getenv("KUBE_NAMESPACE")
 
@@ -128,10 +125,6 @@ func generatePod(cwd string, env []string, args []string) *corev1.Pod {
 							MountPath: "/config",
 							ReadOnly:  true,
 						},
-						{
-							Name:      "transcode",
-							MountPath: "/transcode",
-						},
 					},
 				},
 			},
@@ -149,14 +142,6 @@ func generatePod(cwd string, env []string, args []string) *corev1.Pod {
 					VolumeSource: corev1.VolumeSource{
 						PersistentVolumeClaim: &corev1.PersistentVolumeClaimVolumeSource{
 							ClaimName: configPVC,
-						},
-					},
-				},
-				{
-					Name: "transcode",
-					VolumeSource: corev1.VolumeSource{
-						PersistentVolumeClaim: &corev1.PersistentVolumeClaimVolumeSource{
-							ClaimName: transcodePVC,
 						},
 					},
 				},
