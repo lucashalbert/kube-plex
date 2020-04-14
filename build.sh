@@ -43,3 +43,31 @@ for docker_arch in amd64 arm32v6 arm64v8; do
 
     fi
 done
+
+
+
+# Create version specific docker manifest
+DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/kube-plex:${kube_plex_ver} lucashalbert/kube-plex:amd64-${kube_plex_ver} lucashalbert/kube-plex:arm32v6-${kube_plex_ver} lucashalbert/kube-plex:arm64v8-${kube_plex_ver}
+
+# Create latest docker manifest
+DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/kube-plex:latest lucashalbert/kube-plex:amd64-${kube_plex_ver} lucashalbert/kube-plex:arm32v6-${kube_plex_ver} lucashalbert/kube-plex:arm64v8-${kube_plex_ver}
+
+for docker_arch in amd64 arm32v6 arm64v8; do
+    case ${docker_arch} in
+        amd64   ) image_arch="amd64" ;;
+        arm32v6 ) image_arch="arm"   ;;
+        arm64v8 ) image_arch="arm64" ;;    
+    esac
+
+    # Annotate version specific docker manifest
+    DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/kube-plex:${kube_plex_ver} lucashalbert/kube-plex:${docker_arch}-${kube_plex_ver} --os linux --arch ${image_arch}
+
+    # Annotate latest docker manifest
+    DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/kube-plex:latest lucashalbert/kube-plex:${docker_arch}-${kube_plex_ver} --os linux --arch ${image_arch}
+done
+
+# Push version specific docker manifest
+DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/kube-plex:${kube_plex_ver}
+
+# Push latest docker manifest
+DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/kube-plex:latest
