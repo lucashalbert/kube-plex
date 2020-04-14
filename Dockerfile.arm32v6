@@ -1,0 +1,5 @@
+FROM arm32v6/alpine
+
+ENV BUILD_DATE=20200414T133725 
+
+ADD build/kube-plex-linux-arm /kube-plex

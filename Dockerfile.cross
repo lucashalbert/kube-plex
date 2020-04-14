@@ -1,0 +1,5 @@
+FROM __BASEIMAGE_ARCH__/alpine
+
+ENV BUILD_DATE=__BUILD_DATE__ 
+
+ADD build/kube-plex-linux-__GO_ARCH__ /kube-plex

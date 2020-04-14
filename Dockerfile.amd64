@@ -1,0 +1,5 @@
+FROM amd64/alpine
+
+ENV BUILD_DATE=20200414T133725 
+
+ADD build/kube-plex-linux-amd64 /kube-plex
