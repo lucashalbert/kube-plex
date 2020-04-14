@@ -24,10 +24,6 @@ for docker_arch in amd64 arm32v6 arm64v8; do
         sudo docker build -f Dockerfile.${docker_arch} -t lucashalbert/kube-plex:${docker_arch}-${kube_plex_ver} .
         sudo docker push lucashalbert/kube-plex:${docker_arch}-${kube_plex_ver}
 
-        # Create and annotate arch/ver docker manifest
-        sudo DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create lucashalbert/kube-plex:${docker_arch}-${kube_plex_ver} lucashalbert/kube-plex:${docker_arch}-${kube_plex_ver}
-        sudo DOCKER_CLI_EXPERIMENTAL=enabled docker manifest annotate lucashalbert/kube-plex:${docker_arch}-${kube_plex_ver} lucashalbert/kube-plex:${docker_arch}-${kube_plex_ver} --os linux --arch ${image_arch}
-        sudo DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push lucashalbert/kube-plex:${docker_arch}-${kube_plex_ver}
     else
         # Build kube-plex
         docker run -v $(pwd)/build:/go/build -e GOOS=linux -e GOARCH=${go_arch} golang /bin/bash -c "go get -d -v -u github.com/lucashalbert/kube-plex && go build -o build/kube-plex-linux-${go_arch} github.com/lucashalbert/kube-plex"
