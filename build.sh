@@ -1,6 +1,6 @@
 #!/bin/bash
 
-kube_plex_ver=0.0.1
+kube_plex_ver=0.2.8
 build_date=${build_date:-$(date +"%Y%m%dT%H%M%S")}
 
 for docker_arch in amd64 arm32v6 arm64v8; do
