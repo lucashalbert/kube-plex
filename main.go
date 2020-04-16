@@ -28,6 +28,9 @@ var namespace = os.Getenv("KUBE_NAMESPACE")
 var pmsImage = os.Getenv("PMS_IMAGE")
 var pmsInternalAddress = os.Getenv("PMS_INTERNAL_ADDRESS")
 
+// nodeSelectory architecture
+var kubePlexArch = os.Getenv("KUBE_PLEX_ARCH")
+
 func main() {
 	env := os.Environ()
 	args := os.Args
@@ -104,7 +107,7 @@ func generatePod(cwd string, env []string, args []string) *corev1.Pod {
 		},
 		Spec: corev1.PodSpec{
 			NodeSelector: map[string]string{
-				"beta.kubernetes.io/arch": "arm64",
+				"beta.kubernetes.io/arch": kubePlexArch,
 			},
 			RestartPolicy: corev1.RestartPolicyNever,
 			Containers: []corev1.Container{

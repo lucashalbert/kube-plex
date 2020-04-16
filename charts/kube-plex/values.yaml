@@ -8,6 +8,7 @@ image:
 
 kubePlex:
   enabled: true
+  arch: amd64
   image:
     repository: quay.io/munnerz/kube-plex
     tag: latest
